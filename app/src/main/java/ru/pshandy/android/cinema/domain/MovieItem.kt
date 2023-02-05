@@ -5,5 +5,4 @@ data class MovieItem(
     var posterUrl: String,
     var nameRu: String,
     var description: String
-) {
-}
+)

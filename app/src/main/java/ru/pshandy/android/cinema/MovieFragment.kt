@@ -1,21 +1,17 @@
 package ru.pshandy.android.cinema
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import com.squareup.picasso.Picasso
 import ru.pshandy.android.cinema.domain.Movie
-import java.util.*
 
 private const val ARG_MOVIE_ID = "Movie_id"
 
@@ -27,14 +23,15 @@ class MovieFragment : Fragment() {
     private lateinit var movieDescriptionTextView: TextView
     private lateinit var movieGenreTextView: TextView
     private lateinit var movieCountryTextView: TextView
+    private lateinit var imageView: ImageView
+    private lateinit var imageButton: ImageButton
     private val movieListViewModel: MovieListViewModel by lazy {
-        ViewModelProviders.of(this).get(MovieListViewModel::class.java)
+        ViewModelProvider(this)[MovieListViewModel::class.java]
     }
-    //TODO image
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movie = Movie();
+        movie = Movie()
     }
 
     override fun onCreateView(
@@ -49,27 +46,30 @@ class MovieFragment : Fragment() {
         movieDescriptionTextView = view.findViewById(R.id.movie_description) as TextView
         movieGenreTextView = view.findViewById(R.id.movie_genre) as TextView
         movieCountryTextView = view.findViewById(R.id.movie_countries) as TextView
-        //TODO image
-        return view;
+        imageView = view.findViewById(R.id.imageView) as ImageView
+        imageButton = view.findViewById(R.id.movie_back)
+        imageButton.setOnClickListener() {
+            parentFragmentManager.popBackStack()
+        }
+        return view
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val crimeId = arguments?.getSerializable(ARG_MOVIE_ID) as Int
-        this.movie = movieListViewModel.getMovie(crimeId)
+        val movieId = arguments?.getSerializable(ARG_MOVIE_ID) as Int
+        this.movie = movieListViewModel.getMovie(movieId)
         updateUI()
     }
 
     private fun updateUI() {
-        movieTitleTextView.setText(movie.nameRu)
-        movieDescriptionTextView.setText(movie.description)
-        movieGenreTextView.setText("Жанры: " + movie.genres.joinToString(", "))
-        movieCountryTextView.setText("Страны: " + movie.countries.joinToString(", "))
-    }
-
-    override fun onStart() {
-        super.onStart()
+        movieTitleTextView.text = movie.nameRu
+        movieDescriptionTextView.text = movie.description
+        movieGenreTextView.text = "Жанры: " + movie.genres.joinToString(", ")
+        movieCountryTextView.text = "Страны: " + movie.countries.joinToString(", ")
+        Picasso.get()
+            .load(movie.posterUrl)
+            .into(imageView)
     }
 
     companion object {

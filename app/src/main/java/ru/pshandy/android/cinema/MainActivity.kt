@@ -1,9 +1,8 @@
 package ru.pshandy.android.cinema
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity(), MovieListFragment.Callbacks {
     override fun onCreate(savedInstanceState: Bundle?) {

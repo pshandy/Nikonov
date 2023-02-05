@@ -1,6 +1,5 @@
 package ru.pshandy.android.cinema.repository
 
-import android.content.Context
 import ru.pshandy.android.cinema.domain.Movie
 import ru.pshandy.android.cinema.domain.MovieItem
 

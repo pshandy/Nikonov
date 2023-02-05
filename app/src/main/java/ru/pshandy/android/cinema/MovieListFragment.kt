@@ -2,7 +2,6 @@ package ru.pshandy.android.cinema
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ru.pshandy.android.cinema.domain.MovieItem
 
 class MovieListFragment : Fragment() {
@@ -71,7 +71,9 @@ class MovieListFragment : Fragment() {
             this.movieItem = movieItem
             descriptionTextView.text = this.movieItem.description
             nameRuTextView.text = this.movieItem.nameRu
-            //TODO posterImageView
+            Picasso.get()
+                .load(movieItem.posterUrl)
+                .into(posterImageView)
         }
 
         init {
