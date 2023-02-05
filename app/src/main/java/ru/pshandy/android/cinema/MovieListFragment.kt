@@ -81,7 +81,7 @@ class MovieListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            callbacks?.onMovieSelected(movieItem.id)
+            callbacks?.onMovieSelected(movieItem.filmId)
         }
         
     }
